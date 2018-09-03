@@ -16,7 +16,8 @@ Edit the `run_benchmark.sh` file with your data and cluster configuration, and l
 Configuration:
 - Spark 2.3.1
 - HDFS 2.8.4
-- Input dataset: N objects (x, y, z)
-- 102 cores (6 executors), 200 GB RAM total
+- Input dataset: 370,000,000 objects (x, y, z)
+- 153 cores (9 executors), 300 GB RAM total
 
-_To come_
+<p align="center"><img width="500" src="https://github.com/astrolabsoftware/spark3D/raw/master/benchmark_370million.png"/>
+</p>
