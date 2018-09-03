@@ -39,6 +39,8 @@ if __name__ == "__main__":
     addargs(parser)
     args = parser.parse_args(None)
 
+    colors = {"fits": "C0", "csv": "C1", "parquet": "C2"}
+
     # Initialisation
     df = pd.read_csv(args.inputCSV[0])
     extension = df.axes[1][0].split(" ")[-1]
@@ -47,7 +49,7 @@ if __name__ == "__main__":
     ax = df[1:].hist(
         "Times for {}".format(extension),
         label=extension + " ({:.3f} s)".format(mean))
-    pl.axvline(mean, color='C0', ls='--')
+    pl.axvline(mean, color=colors[extension], ls='--')
 
     # If several files
     for index, file in enumerate(args.inputCSV[1:]):
@@ -60,7 +62,7 @@ if __name__ == "__main__":
         df_other[1:].hist(
             "Times for {}".format(extension),
             ax=ax, label=extension + " ({:.3f} s)".format(mean))
-        pl.axvline(mean, color='C{}'.format(index+1), ls='--')
+        pl.axvline(mean, color=colors[extension], ls='--')
 
     pl.legend()
     pl.title("Benchmark")
