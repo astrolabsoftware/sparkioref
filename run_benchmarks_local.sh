@@ -30,8 +30,8 @@ sbt ++${SBT_VERSION} package
 fitsfn="file:/Users/julien/Documents/workspace/myrepos/sparkioref/src/test/resources/sph_point_2000.parquet"
 loop=10
 
-# 11G, 55 GB
-for replication in 0 10; do
+# X, 10X GB
+for replication in 0 9; do
   spark-submit \
     --master local[*] \
     --class com.astrolabsoftware.sparkioref.benchmark \

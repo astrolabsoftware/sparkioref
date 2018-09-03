@@ -31,7 +31,7 @@ fitsfn="hdfs://134.158.75.222:8020//user/julien.peloton/LSST1YFITS"
 loop=10
 ext=fits
 
-# 110 550 1100 GB
+# X, 2X, 5X, 10X GB
 for replication in 0 1 4 9; do
   spark-submit \
     --master spark://134.158.75.222:7077 \
