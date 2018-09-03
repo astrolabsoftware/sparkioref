@@ -48,7 +48,8 @@ if __name__ == "__main__":
     mean = df[1:].mean()["Times for {}".format(extension)]
     ax = df[1:].hist(
         "Times for {}".format(extension),
-        label=extension + " ({:.3f} s)".format(mean))
+        label=extension + " ({:.3f} s)".format(mean),
+        color=colors[extension])
     pl.axvline(mean, color=colors[extension], ls='--')
 
     # If several files
@@ -61,7 +62,9 @@ if __name__ == "__main__":
 
         df_other[1:].hist(
             "Times for {}".format(extension),
-            ax=ax, label=extension + " ({:.3f} s)".format(mean))
+            ax=ax,
+            label=extension + " ({:.3f} s)".format(mean),
+            color=colors[extension])
         pl.axvline(mean, color=colors[extension], ls='--')
 
     pl.legend()
