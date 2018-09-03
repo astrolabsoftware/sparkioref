@@ -16,6 +16,8 @@
 package com.astrolabsoftware.sparkioref
 
 import scala.util.Try
+import scala.collection.mutable.ListBuffer
+import java.time
 
 // Logger info
 import org.apache.log4j.Level
@@ -23,6 +25,8 @@ import org.apache.log4j.Logger
 
 import com.astrolabsoftware.sparkioref.Utils._
 
+import org.apache.spark.sql.Row
+import org.apache.spark.sql.types._
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.storage.StorageLevel
@@ -43,14 +47,20 @@ object benchmark {
   /**
     * Routine to just check the throughput
     */
-  def ioBenchmark(df: DataFrame, loop: Int = 1) = {
+  def ioBenchmark(df: DataFrame, loop: Int = 1) : (Long, List[Double]) = {
     // Put the data set in-memory
     df.persist(StorageLevel.MEMORY_ONLY_SER)
 
+    var times = new ListBuffer[Double]
+    var count : Long = 0
+
     for (i <- 1 to loop) {
-      val result = time("bench", df.count())
-      print(s"result=$result \n")
+      val result_and_time = timeit("bench", df.count())
+      count = result_and_time._1
+      times += result_and_time._2
     }
+
+    (count, times.result())
   }
 
   /**
@@ -88,7 +98,34 @@ object benchmark {
     val df_index = df_tot.select($"RA", $"Dec", ($"Z_COSMO"))
 
     // Benchmark
-    val result = ioBenchmark(df_index, loop)
-  }
+    val count_and_times = ioBenchmark(df_index, loop)
 
+    // Create a DataFrame with the recorded times.
+    val schema = StructType(
+      StructField("Times for " + extension, DoubleType, true) ::
+      StructField("Count", LongType, true) ::
+      Nil)
+
+    val rdd = spark.sparkContext.parallelize(
+      count_and_times._2.zip(
+        Stream.continually(count_and_times._1)
+      )
+    )
+
+    val df_times = spark.createDataFrame(
+      rdd.map(x => Row(x._1, x._2)),
+      schema
+    )
+
+    // Show the result for visual inspection
+    df_times.show()
+
+    // Save the result as CSV
+    val now : String = time.Instant.now.toString.replace(".", "_").replace(":", "_").toString
+    df_times
+      .coalesce(1)
+      .write.format("csv")
+      .option("header", true)
+      .save(now + "_" + extension)
+  }
 }

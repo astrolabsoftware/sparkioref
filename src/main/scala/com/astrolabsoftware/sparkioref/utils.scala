@@ -31,19 +31,24 @@ object Utils {
     *   Label to be displayed on the screen
     * @param block : (R)
     *   Action to benchmark.
+    * @return (R, Double) The result of the executed block,
+    *   plus the elapsed time in second
+    *
     */
-  def time[R](text: String, block: => R): R = {
+  def timeit[R](text: String, block: => R): (R, Double) = {
+
+    // Simple timing
     val t0 = System.nanoTime()
     val result = block
     val t1 = System.nanoTime()
 
-    var dt:Double = (t1 - t0).asInstanceOf[Double] / 1000000000.0
+    var dt : Double = (t1 - t0).asInstanceOf[Double] / 1000000000.0
 
-    val unit = "S"
+    val unit : String = "s"
 
     println("\n" + text + "> Elapsed time:" + " " + dt + " " + unit)
 
-    result
+    (result, dt)
   }
 
   /**
