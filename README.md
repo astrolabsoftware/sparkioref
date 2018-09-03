@@ -18,7 +18,7 @@ Configuration:
 - HDFS 2.8.4
 - Input dataset: 370,000,000 objects (x, y, z)
 - 153 cores (9 executors), 300 GB RAM total
-- No cache: 10 iterations
+- No cache: 100 iterations (data read)
 - Data in memory: 100 iterations (data read and put in cache at the 1st iteration)
 
 <p align="center"><img width="800" src="https://github.com/astrolabsoftware/sparkioref/raw/master/pic/benchmark_370million_nocache.png"/>
