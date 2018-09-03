@@ -19,5 +19,5 @@ Configuration:
 - Input dataset: 370,000,000 objects (x, y, z)
 - 153 cores (9 executors), 300 GB RAM total
 
-<p align="center"><img width="500" src="https://github.com/astrolabsoftware/spark3D/raw/master/benchmark_370million.png"/>
+<p align="center"><img width="500" src="https://github.com/astrolabsoftware/sparkioref/raw/master/benchmark_370million.png"/>
 </p>
