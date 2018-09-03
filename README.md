@@ -21,6 +21,6 @@ Configuration:
 - No cache: 10 iterations
 - Data in memory: 100 iterations (data read and put in cache at the 1st iteration)
 
-<p align="center"><img width="500" src="https://github.com/astrolabsoftware/sparkioref/raw/master/pic/benchmark_370million_nocache.png"/>
-<img width="500" src="https://github.com/astrolabsoftware/sparkioref/raw/master/pic/benchmark_370million.png"/>
+<p align="center"><img width="800" src="https://github.com/astrolabsoftware/sparkioref/raw/master/pic/benchmark_370million_nocache.png"/>
+<img width="800" src="https://github.com/astrolabsoftware/sparkioref/raw/master/pic/benchmark_370million.png"/>
 </p>
