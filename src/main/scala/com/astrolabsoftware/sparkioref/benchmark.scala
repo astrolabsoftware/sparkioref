@@ -64,7 +64,9 @@ object benchmark {
     val loop : Int = Try{args(2).toInt}.getOrElse(1)
 
     // File extension
-    val extension = catalogFilename.split('.').reverse(0)
+    val extension : String = Try{args(3).toString}.getOrElse(
+      catalogFilename.split('.').reverse(0)
+    )
 
     // DataFrameReader options
     val options = extension match {

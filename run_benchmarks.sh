@@ -27,8 +27,9 @@ packages="com.github.astrolabsoftware:spark-fits_2.11:0.6.0"
 sbt ++${SBT_VERSION} package
 
 # Parameters
-fitsfn="hdfs://134.158.75.222:8020//user/julien.peloton/LSST10Y"
+fitsfn="hdfs://134.158.75.222:8020//user/julien.peloton/LSST1YFITS"
 loop=10
+ext=fits
 
 # 110 550 1100 GB
 for replication in 0 1 4 9; do
@@ -38,6 +39,6 @@ for replication in 0 1 4 9; do
     --class com.astrolabsoftware.sparkioref.benchmark \
     --packages ${packages} \
     target/scala-${SBT_VERSION_SPARK}/sparkioref_${SBT_VERSION_SPARK}-${VERSION}.jar \
-    $fitsfn $replication $loop
+    $fitsfn $replication $loop $ext
   wait
 done
