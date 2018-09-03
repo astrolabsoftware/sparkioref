@@ -126,6 +126,6 @@ object benchmark {
       .coalesce(1)
       .write.format("csv")
       .option("header", true)
-      .save(now + "_" + extension)
+      .save(now + "_" + count_and_times._1 + "_" + extension)
   }
 }
