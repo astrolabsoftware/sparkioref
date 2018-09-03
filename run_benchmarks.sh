@@ -33,7 +33,7 @@ ext=fits
 for ext in "fits" "csv" "parquet"; do
   # X, 2X, 5X, 10X GB
   for replication in 0 1 4 9; do
-    UC_EXT=`$ext | awk '{print toupper($0)}'`
+    UC_EXT=`echo $ext | awk '{print toupper($0)}'`
     fitsfn="hdfs://134.158.75.222:8020//user/julien.peloton/LSST1Y${UC_EXT}"
     spark-submit \
       --master spark://134.158.75.222:7077 \
