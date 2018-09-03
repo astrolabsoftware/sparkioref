@@ -27,16 +27,18 @@ packages="com.github.astrolabsoftware:spark-fits_2.11:0.6.0"
 sbt ++${SBT_VERSION} package
 
 # Parameters
-fitsfn="file:/Users/julien/Documents/workspace/myrepos/sparkioref/src/test/resources/sph_point_2000.parquet"
-loop=10
+loop=100
 
 # X, 10X GB
-for replication in 0 9; do
-  spark-submit \
-    --master local[*] \
-    --class com.astrolabsoftware.sparkioref.benchmark \
-    --packages ${packages} \
-    target/scala-${SBT_VERSION_SPARK}/sparkioref_${SBT_VERSION_SPARK}-${VERSION}.jar \
-    $fitsfn $replication $loop
-  wait
+for ext in "fits" "csv" "parquet"; do
+  for replication in 9; do
+    fitsfn="file:/Users/julien/Documents/workspace/myrepos/sparkioref/src/test/resources/sph_point_2000.$ext"
+    spark-submit \
+      --master local[*] \
+      --class com.astrolabsoftware.sparkioref.benchmark \
+      --packages ${packages} \
+      target/scala-${SBT_VERSION_SPARK}/sparkioref_${SBT_VERSION_SPARK}-${VERSION}.jar \
+      $fitsfn $replication $loop
+    wait
+  done
 done
